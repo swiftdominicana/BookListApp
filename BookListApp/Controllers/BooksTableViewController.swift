@@ -14,37 +14,28 @@ class BooksTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupRefreshControl()
-    loadData()
+    //loadData()
   }
   
   private func loadData() {
-    data = fetchBooks()
+    //data = fetchBooks()
     self.tableView.reloadData()
-    self.tableView.refreshControl?.endRefreshing()
-  }
-  
-  private func setupRefreshControl() {
-    let refreshControl = UIRefreshControl()
-    refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-    self.tableView.refreshControl = refreshControl
-  }
-  @objc
-  private func refreshData(_ sender: UIRefreshControl){
-    sender.beginRefreshing()
-    loadData()
   }
   
   // MARK: - Table view data source
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return data.count
+    //return data.count
+    let sectionInfo = fetchedResultsController?.sections![section]
+    return sectionInfo?.numberOfObjects ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
     
-    let book = data[indexPath.row]
-    cell.textLabel?.text = book.name
+    //let book = data[indexPath.row]
+    let book = fetchedResultsController!.object(at: indexPath)
+    
+    configureCell(cell, with: book)
     
     return cell
   }
@@ -55,10 +46,12 @@ class BooksTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      deleteBook(data[indexPath.row])
-      data.remove(at: indexPath.row)
-      tableView.deleteRows(at: [indexPath], with: .fade)
+      deleteBook(fetchedResultsController!.object(at:indexPath))
     }
+  }
+  
+  private func configureCell(_ cell: UITableViewCell, with book: Book) {
+    cell.textLabel?.text = book.name
   }
   
   @IBAction func addBookButtonTapped(_ sender: Any) {
@@ -81,6 +74,30 @@ class BooksTableViewController: UITableViewController {
     
     present(alert, animated: true)
   }
+  
+  lazy var fetchedResultsController: NSFetchedResultsController<Book>? = {
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    guard let context = appDelegate?.persistentContainer.viewContext else {
+      return nil
+    }
+    
+    let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    
+    let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context,
+                                                sectionNameKeyPath: nil, cacheName: nil)
+    
+    
+    controller.delegate = self
+    do {
+      try controller.performFetch()
+    }
+    catch {
+      print("Unexpected error \(error)")
+    }
+    
+    return controller
+  }()
 }
 
 // MARK: - Core Data Logic
@@ -139,6 +156,43 @@ extension BooksTableViewController {
       print("Unexpected error")
     }
   }
+}
+
+extension BooksTableViewController: NSFetchedResultsControllerDelegate {
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates()
+  }
   
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+    switch type {
+    case .insert:
+      tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+    case .delete:
+      tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+    default:
+      return
+    }
+  }
   
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    switch type {
+    case .insert:
+      tableView.insertRows(at: [newIndexPath!], with: .fade)
+    case .delete:
+      tableView.deleteRows(at: [indexPath!], with: .fade)
+    case .update:
+      configureCell(tableView.cellForRow(at: indexPath!)!,
+                    with: anObject as! Book)
+    case .move:
+      configureCell(tableView.cellForRow(at: indexPath!)!,
+                    with: anObject as! Book)
+      tableView.moveRow(at: indexPath!, to: newIndexPath!)
+    @unknown default:
+      fatalError()
+    }
+  }
+  
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
+  }
 }
