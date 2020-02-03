@@ -14,6 +14,7 @@
 		EE8721D823E7BFEB006AAC82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D723E7BFEB006AAC82 /* Assets.xcassets */; };
 		EE8721DB23E7BFEB006AAC82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D923E7BFEB006AAC82 /* LaunchScreen.storyboard */; };
 		EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */; };
+		EE8721E723E8C001006AAC82 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721E623E8C001006AAC82 /* BookViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EE8721DA23E7BFEB006AAC82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE8721DC23E7BFEB006AAC82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
+		EE8721E623E8C001006AAC82 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */,
+				EE8721E623E8C001006AAC82 /* BookViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				EE8721D623E7BFE9006AAC82 /* BookListApp.xcdatamodeld in Sources */,
 				EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */,
+				EE8721E723E8C001006AAC82 /* BookViewController.swift in Sources */,
 				EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */,
 				EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */,
 			);

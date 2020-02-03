@@ -74,7 +74,9 @@ class BooksTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let book = data[indexPath.row]
+    performSegue(withIdentifier: "showBookModal", sender: self)
+    
+    /*let book = data[indexPath.row]
     
     let alert = UIAlertController(title: "Agregar Nuevo Libro", message: "Ingrese el nombre del libro", preferredStyle: .alert)
     
@@ -93,7 +95,7 @@ class BooksTableViewController: UITableViewController {
     alert.addAction(alertOkAction)
     alert.addAction(alertCancelAction)
     
-    present(alert, animated: true)
+    present(alert, animated: true)*/
   }
   
   override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
@@ -127,6 +129,16 @@ class BooksTableViewController: UITableViewController {
     alert.addAction(alertCancelAction)
     
     present(alert, animated: true)
+  }
+  
+  
+  @IBSegueAction func showBookModal(_ coder: NSCoder) -> UIViewController? {
+    if let index = tableView.indexPathForSelectedRow?.row {
+      let book = data[index]
+      return BookViewController(coder: coder, book: book)
+    }
+    
+    return BookViewController(coder: coder)
   }
 }
 
