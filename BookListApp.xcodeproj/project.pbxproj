@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */; };
 		EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */; };
-		EE8721D023E7BFE9006AAC82 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CF23E7BFE9006AAC82 /* ViewController.swift */; };
 		EE8721D323E7BFE9006AAC82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D123E7BFE9006AAC82 /* Main.storyboard */; };
 		EE8721D623E7BFE9006AAC82 /* BookListApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE8721D423E7BFE9006AAC82 /* BookListApp.xcdatamodeld */; };
 		EE8721D823E7BFEB006AAC82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D723E7BFEB006AAC82 /* Assets.xcassets */; };
 		EE8721DB23E7BFEB006AAC82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D923E7BFEB006AAC82 /* LaunchScreen.storyboard */; };
+		EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EE8721C823E7BFE9006AAC82 /* BookListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EE8721CF23E7BFE9006AAC82 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EE8721D223E7BFE9006AAC82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE8721D523E7BFE9006AAC82 /* BookListApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookListApp.xcdatamodel; sourceTree = "<group>"; };
 		EE8721D723E7BFEB006AAC82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE8721DA23E7BFEB006AAC82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE8721DC23E7BFEB006AAC82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +58,10 @@
 		EE8721CA23E7BFE9006AAC82 /* BookListApp */ = {
 			isa = PBXGroup;
 			children = (
+				EE8721E523E7C5B9006AAC82 /* Models */,
+				EE8721E223E7C044006AAC82 /* Controllers */,
 				EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */,
 				EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */,
-				EE8721CF23E7BFE9006AAC82 /* ViewController.swift */,
 				EE8721D123E7BFE9006AAC82 /* Main.storyboard */,
 				EE8721D723E7BFEB006AAC82 /* Assets.xcassets */,
 				EE8721D923E7BFEB006AAC82 /* LaunchScreen.storyboard */,
@@ -68,6 +69,21 @@
 				EE8721D423E7BFE9006AAC82 /* BookListApp.xcdatamodeld */,
 			);
 			path = BookListApp;
+			sourceTree = "<group>";
+		};
+		EE8721E223E7C044006AAC82 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EE8721E523E7C5B9006AAC82 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE8721D623E7BFE9006AAC82 /* BookListApp.xcdatamodeld in Sources */,
-				EE8721D023E7BFE9006AAC82 /* ViewController.swift in Sources */,
+				EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */,
 				EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */,
 				EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */,
 			);
