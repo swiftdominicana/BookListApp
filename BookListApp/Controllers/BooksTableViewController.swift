@@ -28,6 +28,7 @@ class BooksTableViewController: UITableViewController {
   @IBAction func searchBarButtonTapped(_ sender: Any) {
     self.searchController.searchBar.becomeFirstResponder()
   }
+  
   private func setupSearchController(){
     searchController.searchResultsUpdater = self
     searchController.searchBar.placeholder = "search book name"
@@ -111,7 +112,8 @@ class BooksTableViewController: UITableViewController {
   }
   
   @IBAction func addBookButtonTapped(_ sender: Any) {
-    let alert = UIAlertController(title: "Agregar Nuevo Libro", message: "Ingrese el nombre del libro", preferredStyle: .alert)
+    performSegue(withIdentifier: "showBookModal", sender: self)
+    /*let alert = UIAlertController(title: "Agregar Nuevo Libro", message: "Ingrese el nombre del libro", preferredStyle: .alert)
     
     alert.addTextField { (textField) in
       textField.placeholder = "Nombre del libro"
@@ -128,17 +130,30 @@ class BooksTableViewController: UITableViewController {
     alert.addAction(alertOkAction)
     alert.addAction(alertCancelAction)
     
-    present(alert, animated: true)
+    present(alert, animated: true)*/
   }
   
   
   @IBSegueAction func showBookModal(_ coder: NSCoder) -> UIViewController? {
-    if let index = tableView.indexPathForSelectedRow?.row {
-      let book = data[index]
-      return BookViewController(coder: coder, book: book)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRow(at: indexPath, animated: true)
+      
+      let book = data[indexPath.row]
+      let bookViewController = BookViewController(coder: coder, book: book)
+      bookViewController?.delegate = self
+      return bookViewController
     }
     
-    return BookViewController(coder: coder)
+    let bookViewController = BookViewController(coder: coder)
+    bookViewController?.delegate = self
+    return bookViewController
+  }
+}
+
+//MARK: - Book View Controller Delegate
+extension BooksTableViewController: BookViewControllerDelegate {
+  func didSaveBook(_ bookViewController: BookViewController) {
+    self.loadData()
   }
 }
 

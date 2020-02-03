@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE61216C23E8C86D008693FE /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61216B23E8C86D008693FE /* AsyncImageView.swift */; };
+		EE61217023E8C8C1008693FE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61216E23E8C8C1008693FE /* ImageCache.swift */; };
+		EE61217123E8C8C1008693FE /* ImagePersitenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61216F23E8C8C1008693FE /* ImagePersitenceHelper.swift */; };
+		EE61217423E8C977008693FE /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61217323E8C977008693FE /* UIImage+Resize.swift */; };
 		EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */; };
 		EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */; };
 		EE8721D323E7BFE9006AAC82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D123E7BFE9006AAC82 /* Main.storyboard */; };
@@ -18,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE61216B23E8C86D008693FE /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		EE61216E23E8C8C1008693FE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		EE61216F23E8C8C1008693FE /* ImagePersitenceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersitenceHelper.swift; sourceTree = "<group>"; };
+		EE61217323E8C977008693FE /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		EE8721C823E7BFE9006AAC82 /* BookListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +49,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE61216A23E8C850008693FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EE61216B23E8C86D008693FE /* AsyncImageView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EE61216D23E8C8A1008693FE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EE61216E23E8C8C1008693FE /* ImageCache.swift */,
+				EE61216F23E8C8C1008693FE /* ImagePersitenceHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		EE61217223E8C958008693FE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EE61217323E8C977008693FE /* UIImage+Resize.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		EE8721BF23E7BFE9006AAC82 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +93,9 @@
 		EE8721CA23E7BFE9006AAC82 /* BookListApp */ = {
 			isa = PBXGroup;
 			children = (
+				EE61217223E8C958008693FE /* Extensions */,
+				EE61216D23E8C8A1008693FE /* Helpers */,
+				EE61216A23E8C850008693FE /* Views */,
 				EE8721E523E7C5B9006AAC82 /* Models */,
 				EE8721E223E7C044006AAC82 /* Controllers */,
 				EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */,
@@ -163,8 +199,12 @@
 				EE8721D623E7BFE9006AAC82 /* BookListApp.xcdatamodeld in Sources */,
 				EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */,
 				EE8721E723E8C001006AAC82 /* BookViewController.swift in Sources */,
+				EE61217123E8C8C1008693FE /* ImagePersitenceHelper.swift in Sources */,
 				EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */,
+				EE61217423E8C977008693FE /* UIImage+Resize.swift in Sources */,
 				EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */,
+				EE61217023E8C8C1008693FE /* ImageCache.swift in Sources */,
+				EE61216C23E8C86D008693FE /* AsyncImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
