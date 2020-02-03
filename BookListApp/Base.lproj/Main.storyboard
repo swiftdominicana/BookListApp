@@ -30,6 +30,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Listado de Libros" id="3MU-nG-1Xs">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="F3C-7S-pVd">
+                            <connections>
+                                <action selector="searchBarButtonTapped:" destination="5F1-Py-gz4" id="6wh-Oc-g93"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="j1f-5d-pqs">
                             <connections>
                                 <action selector="addBookButtonTapped:" destination="5F1-Py-gz4" id="KyU-yO-Q07"/>
