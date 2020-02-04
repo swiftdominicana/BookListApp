@@ -17,6 +17,7 @@ enum Scope: String, CaseIterable {
 class BooksTableViewController: UITableViewController {
   private var data = [Book]()
   private var searchController = UISearchController()
+  private let segueName = "showBookForm"
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -75,7 +76,7 @@ class BooksTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    performSegue(withIdentifier: "showBookModal", sender: self)
+    performSegue(withIdentifier: segueName, sender: self)
     
     /*let book = data[indexPath.row]
     
@@ -112,7 +113,7 @@ class BooksTableViewController: UITableViewController {
   }
   
   @IBAction func addBookButtonTapped(_ sender: Any) {
-    performSegue(withIdentifier: "showBookModal", sender: self)
+    performSegue(withIdentifier: segueName, sender: self)
     /*let alert = UIAlertController(title: "Agregar Nuevo Libro", message: "Ingrese el nombre del libro", preferredStyle: .alert)
     
     alert.addTextField { (textField) in
@@ -134,7 +135,7 @@ class BooksTableViewController: UITableViewController {
   }
   
   
-  @IBSegueAction func showBookModal(_ coder: NSCoder) -> UIViewController? {
+  @IBSegueAction func showBookForm(_ coder: NSCoder) -> UIViewController? {
     if let indexPath = tableView.indexPathForSelectedRow {
       tableView.deselectRow(at: indexPath, animated: true)
       

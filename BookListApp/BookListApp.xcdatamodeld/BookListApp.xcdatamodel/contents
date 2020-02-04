@@ -4,8 +4,14 @@
         <attribute name="author" attributeType="String"/>
         <attribute name="coverImageUrl" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Quote" inverseName="book" inverseEntity="Quote"/>
+    </entity>
+    <entity name="Quote" representedClassName="Quote" syncable="YES" codeGenerationType="class">
+        <attribute name="content" attributeType="String" defaultValueString=""/>
+        <relationship name="book" maxCount="1" deletionRule="Cascade" destinationEntity="Book" inverseName="quotes" inverseEntity="Book"/>
     </entity>
     <elements>
-        <element name="Book" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Book" positionX="-735.6171875" positionY="-33.14453125" width="128" height="103"/>
+        <element name="Quote" positionX="-366.57421875" positionY="-6.73828125" width="128" height="73"/>
     </elements>
 </model>
