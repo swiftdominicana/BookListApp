@@ -65,7 +65,7 @@ class BookViewController: UIViewController {
     if isValid {
       save()
       delegate?.didSaveBook(self)
-      self.dismiss(animated: true)
+      self.navigationController?.popViewController(animated: true)
       return
     }
     
@@ -117,20 +117,15 @@ class BookViewController: UIViewController {
       return
     }
     
-    if let newQuote = NSEntityDescription.insertNewObject(forEntityName: "Quote",
-                                                         into: context) as? Quote {
+    context.perfom {
+      let newQuote = Quote(context: context)
       newQuote.content = quote
-      
       book.addToQuotes(newQuote)
-      
-      do {
-        try context.save()
-      }
-      catch {
-        print("Unexpected error: \(error).")
-      }
+      try? context.save()
     }
   }
+  
+  
   @IBAction func showQuoteButtonTapped(_ sender: Any) {
     performSegue(withIdentifier: segueName, sender: self)
   }

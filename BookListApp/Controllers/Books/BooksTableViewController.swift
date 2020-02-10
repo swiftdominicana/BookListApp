@@ -70,7 +70,8 @@ class BooksTableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
     
     let book = data[indexPath.row]
-    cell.textLabel?.text = book.name
+    //cell.textLabel?.text = "\(book.name!)    => frases: \(book.quotes?.count ?? 0)"
+    cell.textLabel?.text = "\(book.name!)    => frases: \(book.quotesCount)"
     
     return cell
   }
@@ -200,12 +201,15 @@ extension BooksTableViewController {
     }
     else {
       //predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR author CONTAINS[cd] %@", criteria)
-      /*predicate = NSCompoundPredicate(
+      
+      let predicates = [
+        NSPredicate(format: "name CONTAINS[cd] %@", criteria),
+        NSPredicate(format: "author CONTAINS[cd] %@", criteria)
+      ]
+      
+      predicate = NSCompoundPredicate(
         type: .or,
-        subpredicates: [
-          NSPredicate(format: "name CONTAINS[cd] %@", criteria),
-          NSPredicate(format: "author CONTAINS[cd] %@", criteria)
-        ])*/
+        subpredicates: predicates)
     }
     
     let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
@@ -246,8 +250,9 @@ extension BooksTableViewController {
       return
     }
     
-    if let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book",
-                                                         into: context) as? Book {
+    if let newBook = NSEntityDescription.insertNewObject(
+      forEntityName: "Book",
+      into: context) as? Book {
       newBook.name = name
       
       do {
