@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Book" representedClassName="Book" syncable="YES" codeGenerationType="class">
         <attribute name="author" attributeType="String"/>
-        <attribute name="coverImageUrl" attributeType="Transformable"/>
+        <attribute name="coverImageUrl" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="quotesCount" optional="YES" attributeType="Integer 32" derived="YES" derivationExpression="quotes.@count" usesScalarValueType="YES"/>
         <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Quote" inverseName="book" inverseEntity="Quote"/>

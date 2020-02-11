@@ -21,6 +21,7 @@
 		EE8721DB23E7BFEB006AAC82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE8721D923E7BFEB006AAC82 /* LaunchScreen.storyboard */; };
 		EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */; };
 		EE8721E723E8C001006AAC82 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721E623E8C001006AAC82 /* BookViewController.swift */; };
+		EEF53D9223F1CF3E00A622B0 /* BookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF53D9123F1CF3E00A622B0 /* BookService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		EE8721DC23E7BFEB006AAC82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE8721E323E7C062006AAC82 /* BooksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 		EE8721E623E8C001006AAC82 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		EEF53D9123F1CF3E00A622B0 /* BookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		EE8721CA23E7BFE9006AAC82 /* BookListApp */ = {
 			isa = PBXGroup;
 			children = (
+				EEF53D9023F1CF1700A622B0 /* Services */,
 				EE61217223E8C958008693FE /* Extensions */,
 				EE61216D23E8C8A1008693FE /* Helpers */,
 				EE61216A23E8C850008693FE /* Views */,
@@ -145,6 +148,14 @@
 			children = (
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		EEF53D9023F1CF1700A622B0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EEF53D9123F1CF3E00A622B0 /* BookService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +237,7 @@
 				EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */,
 				EE61217423E8C977008693FE /* UIImage+Resize.swift in Sources */,
 				EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */,
+				EEF53D9223F1CF3E00A622B0 /* BookService.swift in Sources */,
 				EE61217023E8C8C1008693FE /* ImageCache.swift in Sources */,
 				EE61217A23E8EB7D008693FE /* UIVIewController+Keyboard.swift in Sources */,
 				EE61216C23E8C86D008693FE /* AsyncImageView.swift in Sources */,

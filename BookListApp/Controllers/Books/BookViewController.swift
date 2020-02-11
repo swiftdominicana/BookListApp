@@ -117,7 +117,7 @@ class BookViewController: UIViewController {
       return
     }
     
-    context.perfom {
+    context.perform {
       let newQuote = Quote(context: context)
       newQuote.content = quote
       book.addToQuotes(newQuote)

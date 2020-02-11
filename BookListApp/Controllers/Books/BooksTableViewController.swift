@@ -150,6 +150,15 @@ class BooksTableViewController: UITableViewController {
     bookViewController?.delegate = self
     return bookViewController
   }
+  
+  lazy var context: NSManagedObjectContext? = {
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    guard let context = appDelegate?.persistentContainer.viewContext else {
+      return nil
+    }
+    
+    return context
+  }()
 }
 
 //MARK: - Book View Controller Delegate
@@ -285,14 +294,9 @@ extension BooksTableViewController {
   }
   
   func deleteBook(_ book: Book) {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return
-    }
-    
-    context.delete(book)
+    context?.delete(book)
     do {
-      try context.save()
+      try context?.save()
     }
     catch {
       print("Unexpected error")
