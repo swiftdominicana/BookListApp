@@ -5,7 +5,7 @@ class ImagePersistenceHelper {
   private let fileManager = FileManager.default
   
   func loadImage(imageURL url:URL) -> UIImage? {
-    if let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+    if let docs = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
       let file = docs.appendingPathComponent(url.lastPathComponent)
       if let image = UIImage(contentsOfFile: file.path){
         return image

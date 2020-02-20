@@ -14,7 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    
+    SubscriptionsManager.checkForSubscriptions()
+    registerForPushNotifications()
     return true
+  }
+  
+  func registerForPushNotifications() {
+    UNUserNotificationCenter.current().delegate = self
+    UNUserNotificationCenter.current()
+      .requestAuthorization(options: [.alert, .sound, .badge]) {
+        granted, error in
+        print("Permission granted: \(granted)")
+        DispatchQueue.main.async {
+          UIApplication.shared.registerForRemoteNotifications()
+        }
+    }
   }
   
   // MARK: UISceneSession Lifecycle
@@ -75,5 +90,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }
   }
+  
+  func application(_ application: UIApplication,
+                   didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+  ) {
+    let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+    print("Device Token: \(tokenParts.joined())")
+  }
+
+  func application(_ application: UIApplication,
+                   didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    print("Failed to register: \(error)")
+  }
 }
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse,
+    withCompletionHandler completionHandler: @escaping () -> Void) {
+    
+    let userInfo = response.notification.request.content.userInfo
+    print(userInfo)
+    print("New data received")
+
+  }
+  
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    downloadData()
+  }
+  
+  private func downloadData(){
+    Book.fetchAll(in: persistentContainer.viewContext, nil)
+  }
+}
+
 

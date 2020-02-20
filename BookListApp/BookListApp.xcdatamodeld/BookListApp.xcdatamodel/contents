@@ -3,8 +3,10 @@
     <entity name="Book" representedClassName="Book" syncable="YES" codeGenerationType="class">
         <attribute name="author" attributeType="String"/>
         <attribute name="coverImageUrl" attributeType="URI"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="quotesCount" optional="YES" attributeType="Integer 32" derived="YES" derivationExpression="quotes.@count" usesScalarValueType="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Quote" inverseName="book" inverseEntity="Quote"/>
     </entity>
     <entity name="Quote" representedClassName="Quote" syncable="YES" codeGenerationType="class">
@@ -12,7 +14,7 @@
         <relationship name="book" maxCount="1" deletionRule="Cascade" destinationEntity="Book" inverseName="quotes" inverseEntity="Book"/>
     </entity>
     <elements>
-        <element name="Book" positionX="-735.6171875" positionY="-33.14453125" width="128" height="118"/>
+        <element name="Book" positionX="-735.6171875" positionY="-33.14453125" width="128" height="148"/>
         <element name="Quote" positionX="-366.57421875" positionY="-6.73828125" width="128" height="73"/>
     </elements>
 </model>

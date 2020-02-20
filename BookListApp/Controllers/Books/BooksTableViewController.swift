@@ -25,6 +25,15 @@ class BooksTableViewController: UITableViewController {
     setupSearchController()
     setupRefreshControl()
     setupFetchedResultsController(with: "", scope: .bookName)
+    
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    guard let context = appDelegate?.persistentContainer.viewContext else {
+      return
+    }
+    
+    Book.fetchAll(in: context) {
+      print("Books loaded from CloudKit")
+    }
   }
   
   private func setupFetchedResultsController(with criteria: String, scope: Scope) {
@@ -142,7 +151,9 @@ class BooksTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      deleteBook(fetchedResultsController!.object(at:indexPath))
+      let book = fetchedResultsController!.object(at:indexPath)
+      book.deleteFromCloudKit()
+      deleteBook(book)
     }
   }
   

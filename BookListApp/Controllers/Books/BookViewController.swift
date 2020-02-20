@@ -129,7 +129,7 @@ class BookViewController: UIViewController {
   @IBAction func showQuoteButtonTapped(_ sender: Any) {
     performSegue(withIdentifier: segueName, sender: self)
   }
-
+  
   @IBSegueAction func showQuotes(_ coder: NSCoder) -> UITableViewController? {
     let quotesViewController = QuotesTableViewController(
       coder: coder, quotes: book!.quotes!)
@@ -159,6 +159,15 @@ class BookViewController: UIViewController {
         newBook.author = bookAuthorTextField.text
         newBook.name = bookNameTextField.text
         newBook.coverImageUrl = imageUrl
+        
+        newBook.createOnCloudKit(completion: { (_, error) in
+          guard error == nil else {
+            print("Unexpected error: \(error!).")
+            return
+          }
+          
+          print("Book saved in CloudKit")
+        })
       }
     }
     
