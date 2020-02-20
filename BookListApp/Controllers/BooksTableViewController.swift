@@ -15,15 +15,57 @@ enum Scope: String, CaseIterable {
 }
 
 class BooksTableViewController: UITableViewController {
-  private var data = [Book]()
+  //private var data = [Book]()
   private var searchController = UISearchController()
+  private var fetchedResultsController: NSFetchedResultsController<Book>!
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupRefreshControl()
-    loadData()
     setupSearchController()
+    setupRefreshControl()
+    setupFetchedResultsController(with: "", scope: .bookName)
   }
+  
+  private func setupFetchedResultsController(with criteria: String, scope: Scope) {
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    guard let context = appDelegate?.persistentContainer.viewContext else {
+      return
+    }
+    
+    let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    
+    var predicate = NSPredicate(value: true)
+    if(!criteria.isEmpty) {
+      if(scope == .bookName) {
+        predicate = NSPredicate(format: "name CONTAINS[cd] %@", criteria)
+      }
+      else {
+        //predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR author CONTAINS[cd] %@", criteria)
+        /*predicate = NSCompoundPredicate(
+         type: .or,
+         subpredicates: [
+         NSPredicate(format: "name CONTAINS[cd] %@", criteria),
+         NSPredicate(format: "author CONTAINS[cd] %@", criteria)
+         ])*/
+      }
+    }
+    
+    fetchRequest.predicate = predicate
+    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context,
+                                                sectionNameKeyPath: nil, cacheName: nil)
+    
+    fetchedResultsController.delegate = self
+    do {
+      try fetchedResultsController.performFetch()
+      self.tableView.reloadData()
+      self.tableView.refreshControl?.endRefreshing()
+    }
+    catch {
+      print("Unexpected error \(error)")
+    }
+  }
+  
   
   @IBAction func searchBarButtonTapped(_ sender: Any) {
     self.searchController.searchBar.becomeFirstResponder()
@@ -41,12 +83,6 @@ class BooksTableViewController: UITableViewController {
     searchController.isActive = true
   }
   
-  private func loadData() {
-    data = fetchBooks()
-    self.tableView.reloadData()
-    self.tableView.refreshControl?.endRefreshing()
-  }
-  
   private func setupRefreshControl() {
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -56,26 +92,29 @@ class BooksTableViewController: UITableViewController {
   @objc
   private func refreshData(_ sender: UIRefreshControl){
     sender.beginRefreshing()
-    loadData()
+    setupFetchedResultsController(with: searchController.searchBar.text ?? "", scope: .bookName)
   }
-  
+
   // MARK: - Table view data source
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return data.count
+    //return data.count
+    let sectionInfo = fetchedResultsController?.sections![section]
+    return sectionInfo?.numberOfObjects ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
     
-    let book = data[indexPath.row]
-    cell.textLabel?.text = book.name
+    //let book = data[indexPath.row]
+    let book = fetchedResultsController!.object(at: indexPath)
+    configureCell(cell, with: book)
     
     return cell
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let book = data[indexPath.row]
-    
+    //let book = data[indexPath.row]
+    let book = fetchedResultsController.object(at: indexPath)
     let alert = UIAlertController(title: "Agregar Nuevo Libro", message: "Ingrese el nombre del libro", preferredStyle: .alert)
     
     alert.addTextField { (textField) in
@@ -102,10 +141,12 @@ class BooksTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      deleteBook(data[indexPath.row])
-      data.remove(at: indexPath.row)
-      tableView.deleteRows(at: [indexPath], with: .fade)
+      deleteBook(fetchedResultsController!.object(at:indexPath))
     }
+  }
+  
+  private func configureCell(_ cell: UITableViewCell, with book: Book) {
+    cell.textLabel?.text = book.name
   }
   
   @IBAction func addBookButtonTapped(_ sender: Any) {
@@ -136,12 +177,13 @@ extension BooksTableViewController: UISearchResultsUpdating {
     let searchBar = searchController.searchBar
     
     guard let criteria = searchBar.text, !criteria.isEmpty else {
-      loadData()
+      setupFetchedResultsController(with: "", scope: .bookName)
       return
     }
     let scope = Scope.allCases[searchBar.selectedScopeButtonIndex]
-    data = filterBooks(criteria, scope: scope)
-    self.tableView.reloadData()
+    /*data = filterBooks(criteria, scope: scope)
+    self.tableView.reloadData()*/
+    setupFetchedResultsController(with: criteria, scope: scope)
   }
 }
 
@@ -168,16 +210,16 @@ extension BooksTableViewController {
     
     var predicate = NSPredicate(value: true)
     if(scope == .bookName) {
-       predicate = NSPredicate(format: "name CONTAINS[cd] %@", criteria)
+      predicate = NSPredicate(format: "name CONTAINS[cd] %@", criteria)
     }
     else {
       //predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR author CONTAINS[cd] %@", criteria)
       /*predicate = NSCompoundPredicate(
-        type: .or,
-        subpredicates: [
-          NSPredicate(format: "name CONTAINS[cd] %@", criteria),
-          NSPredicate(format: "author CONTAINS[cd] %@", criteria)
-        ])*/
+       type: .or,
+       subpredicates: [
+       NSPredicate(format: "name CONTAINS[cd] %@", criteria),
+       NSPredicate(format: "author CONTAINS[cd] %@", criteria)
+       ])*/
     }
     
     let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
@@ -264,5 +306,47 @@ extension BooksTableViewController {
     catch {
       print("Unexpected error")
     }
+  }
+}
+
+
+extension BooksTableViewController: NSFetchedResultsControllerDelegate {
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates()
+    tableView.refreshControl?.beginRefreshing()
+  }
+  
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+    switch type {
+    case .insert:
+      tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+    case .delete:
+      tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+    default:
+      return
+    }
+  }
+  
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    switch type {
+    case .insert:
+      tableView.insertRows(at: [newIndexPath!], with: .fade)
+    case .delete:
+      tableView.deleteRows(at: [indexPath!], with: .fade)
+    case .update:
+      configureCell(tableView.cellForRow(at: indexPath!)!,
+                    with: anObject as! Book)
+    case .move:
+      configureCell(tableView.cellForRow(at: indexPath!)!,
+                    with: anObject as! Book)
+      tableView.moveRow(at: indexPath!, to: newIndexPath!)
+    @unknown default:
+      fatalError()
+    }
+  }
+  
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
+    tableView.refreshControl?.endRefreshing()
   }
 }
