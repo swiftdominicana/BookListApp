@@ -29,6 +29,7 @@ class BooksTableViewController: UITableViewController {
     refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     self.tableView.refreshControl = refreshControl
   }
+
   @objc
   private func refreshData(_ sender: UIRefreshControl){
     sender.beginRefreshing()
@@ -71,6 +72,7 @@ class BooksTableViewController: UITableViewController {
     let alertOkAction = UIAlertAction(title: "Agregar", style: .default) { [weak self] _ in
       if let bookName = alert.textFields?.first?.text {
         self?.insertBook(name: bookName)
+        self?.loadData()
       }
     }
     
@@ -86,12 +88,6 @@ class BooksTableViewController: UITableViewController {
 // MARK: - Core Data Logic
 extension BooksTableViewController {
   func insertBook(name: String) {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return
-    }
-    
     if let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book",
                                                          into: context) as? Book {
       newBook.name = name
@@ -108,11 +104,6 @@ extension BooksTableViewController {
   func fetchBooks() -> [Book] {
     var books = [Book]()
     
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return books
-    }
-    
     let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
     
     do {
@@ -124,13 +115,16 @@ extension BooksTableViewController {
     
     return books
   }
+
+  private var context: NSManagedObjectContext {
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      preconditionFailure("We need some context")
+    }
+
+    return appDelegate.persistentContainer.viewContext
+  }
   
   func deleteBook(_ book: Book) {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return
-    }
-    
     context.delete(book)
     do {
       try context.save()
@@ -139,6 +133,4 @@ extension BooksTableViewController {
       print("Unexpected error")
     }
   }
-  
-  
 }
