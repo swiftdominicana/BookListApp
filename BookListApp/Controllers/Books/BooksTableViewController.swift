@@ -15,16 +15,31 @@ enum Scope: String, CaseIterable {
 }
 
 class BooksTableViewController: UITableViewController {
-  //private var data = [Book]()
   private var searchController = UISearchController()
   private var fetchedResultsController: NSFetchedResultsController<Book>!
   private let segueName = "showBookForm"
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupSearchController()
-    setupRefreshControl()
-    setupFetchedResultsController(with: "", scope: .bookName)
+    loadData()
+  }
+
+  private func loadData() {
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    guard let context = appDelegate?.persistentContainer.viewContext else {
+      return
+    }
+
+    let bookService = BookService(context: context)
+    bookService.getBooks {[weak self] success in
+      guard let self = self else { return }
+
+      DispatchQueue.main.async {
+        self.setupSearchController()
+        self.setupRefreshControl()
+        self.setupFetchedResultsController(with: "", scope: .bookName)
+      }
+    }
   }
   
   private func setupFetchedResultsController(with criteria: String, scope: Scope) {
@@ -42,13 +57,13 @@ class BooksTableViewController: UITableViewController {
         predicate = NSPredicate(format: "name CONTAINS[cd] %@", criteria)
       }
       else {
-        //predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR author CONTAINS[cd] %@", criteria)
-        predicate = NSCompoundPredicate(
-         type: .or,
-         subpredicates: [
-         NSPredicate(format: "name CONTAINS[cd] %@", criteria),
-         NSPredicate(format: "author CONTAINS[cd] %@", criteria)
-         ])
+        predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR author CONTAINS[cd] %@", criteria, criteria)
+//        predicate = NSCompoundPredicate(
+//         type: .or,
+//         subpredicates: [
+//         NSPredicate(format: "name CONTAINS[cd] %@", criteria),
+//         NSPredicate(format: "author CONTAINS[cd] %@", criteria)
+//         ])
       }
     }
     

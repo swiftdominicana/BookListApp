@@ -57,7 +57,8 @@ class BookViewController: UIViewController {
         target: self,
         action: #selector(addQuoteButtonTapped))
     }
-    
+
+    showQuotesButton.setTitle("Ver frases (\(book?.quotesCount ?? 0))", for: .normal)
     showQuotesButton.isHidden = !isEditingMode
   }
   

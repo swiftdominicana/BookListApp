@@ -121,7 +121,6 @@
 				EE61217223E8C958008693FE /* Extensions */,
 				EE61216D23E8C8A1008693FE /* Helpers */,
 				EE61216A23E8C850008693FE /* Views */,
-				EE8721E523E7C5B9006AAC82 /* Models */,
 				EE8721E223E7C044006AAC82 /* Controllers */,
 				EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */,
 				EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */,
@@ -141,13 +140,6 @@
 				EE61217523E8E430008693FE /* Books */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		EE8721E523E7C5B9006AAC82 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		EEF53D9023F1CF1700A622B0 /* Services */ = {
@@ -185,7 +177,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "Libranner Leonel Santos Espinal";
 				TargetAttributes = {
 					EE8721C723E7BFE9006AAC82 = {
@@ -292,6 +284,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -352,6 +345,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 
 struct BookService {
-  private let apiURL = "https://firebasestorage.googleapis.com/v0/b/booksusj.appspot.com/o/books.json?alt=media&token=5135b755-78c3-479a-8491-bcd2367686e2"
+  private let apiURL = "https://firebasestorage.googleapis.com/v0/b/fir-swift-4372e.appspot.com/o/books.json?alt=media&token=e4b68cd7-49e1-4a7a-acb3-5ec65dd043b7"
   
   private var context: NSManagedObjectContext
   
@@ -39,7 +39,13 @@ struct BookService {
             
       if let json = try? JSONSerialization.jsonObject(with: unWrappedData) as? [[String: Any]] {
         childContext.perform {
-          let insertRequest = NSBatchInsertRequest(entity: Book.entity(), objects: json)
+          let sanitizedJson = json.map { item -> [String: Any] in
+            var copyItem = item
+            copyItem["coverImageUrl"] = NSURL(string: item["coverImageUrl"] as! String)
+            return copyItem as [String: Any]
+          }
+
+          let insertRequest = NSBatchInsertRequest(entity: Book.entity(), objects: sanitizedJson)
           try! childContext.execute(insertRequest)
           try! childContext.save()
           completion(true)
