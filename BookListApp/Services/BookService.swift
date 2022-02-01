@@ -39,9 +39,14 @@ struct BookService {
         return
       }
 
-      let sanitizedJson = json.map { item -> [String: Any] in
+      let sanitizedJson = json.compactMap { item -> [String: Any]? in
+        guard let urlString = item["coverImageUrl"] as? String,
+              let url = NSURL(string: urlString) else {
+          return nil
+        }
+
         var copyItem = item
-        copyItem["coverImageUrl"] = NSURL(string: item["coverImageUrl"] as! String)
+        copyItem["coverImageUrl"] = url
         return copyItem as [String: Any]
       }
 
