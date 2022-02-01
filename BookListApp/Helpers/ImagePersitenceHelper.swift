@@ -14,24 +14,6 @@ class ImagePersistenceHelper {
     return nil
   }
   
-  func createThumbnail(from image: UIImage, rounded: Bool = true, targetSize size: CGSize) -> UIImage {
-    let scale = max(size.width / image.size.width, size.height / image.size.height)
-    let width = image.size.width * scale
-    let height = image.size.height * scale
-    
-    let denominator: CGFloat = rounded ? 2 : 1;
-    let thumbnailRect = CGRect(x: (size.width - width) / denominator,
-                               y: (size.height - height) / denominator,
-                               width: width, height: height)
-    
-    UIGraphicsBeginImageContext(size)
-    image.draw(in: thumbnailRect)
-    let thumbnail = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    
-    return thumbnail!
-  }
-  
   func saveImage(_ image: UIImage, compression: CGFloat = 1.0) -> URL? {
     if let docs = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
       let fileName = UUID().uuidString
