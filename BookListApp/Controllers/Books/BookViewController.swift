@@ -9,10 +9,6 @@
 import UIKit
 import CoreData
 
-protocol BookViewControllerDelegate {
-  func didSaveBook(_ bookViewController: BookViewController)
-}
-
 class BookViewController: UIViewController {
   @IBOutlet var bookCoverImageView: AsyncImageView!
   @IBOutlet var bookNameTextField: UITextField!
@@ -20,7 +16,6 @@ class BookViewController: UIViewController {
   @IBOutlet var showQuotesButton: UIButton!
   
   private let segueName = "showQuotes"
-  var delegate: BookViewControllerDelegate?
   let book: Book?
   
   private var isEditingMode: Bool {
@@ -58,14 +53,12 @@ class BookViewController: UIViewController {
         action: #selector(addQuoteButtonTapped))
     }
 
-    showQuotesButton.setTitle("Ver frases (\(book?.quotesCount ?? 0))", for: .normal)
     showQuotesButton.isHidden = !isEditingMode
   }
   
   @IBAction func saveButtonTapped(_ sender: Any) {
     if isValid {
       save()
-      delegate?.didSaveBook(self)
       self.navigationController?.popViewController(animated: true)
       return
     }
@@ -97,10 +90,7 @@ class BookViewController: UIViewController {
     }
     
     let alertOkAction = UIAlertAction(title: "Agregar", style: .default) { [weak self] _ in
-      if let quote = alert.textFields?.first?.text,
-        let book = self?.book {
-        self?.addQuoteToBook(book, quote: quote)
-      }
+      //TODO
     }
     
     let alertCancelAction = UIAlertAction(title: "Cancelar", style: .cancel)
@@ -112,18 +102,7 @@ class BookViewController: UIViewController {
   }
   
   private func addQuoteToBook(_ book: Book, quote: String) {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return
-    }
-    
-    context.perform {
-      let newQuote = Quote(context: context)
-      newQuote.content = quote
-      book.addToQuotes(newQuote)
-      try? context.save()
-    }
+    //TODO
   }
   
   
@@ -132,43 +111,11 @@ class BookViewController: UIViewController {
   }
 
   @IBSegueAction func showQuotes(_ coder: NSCoder) -> UITableViewController? {
-    let quotesViewController = QuotesTableViewController(
-      coder: coder, quotes: book!.quotes!)
-    
-    return quotesViewController
+    //TODO
+    return nil
   }
   private func save() {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
-    guard let context = appDelegate?.persistentContainer.viewContext else {
-      return
-    }
-    
-    let imageUrl = ImagePersistenceHelper().saveImage(
-      bookCoverImageView.image!,
-      compression: 0.8)
-    
-    if isEditingMode, let book = book {
-      book.author = bookAuthorTextField.text
-      book.name = bookNameTextField.text
-      book.coverImageUrl = imageUrl
-    }
-    else {
-      if let newBook = NSEntityDescription.insertNewObject(
-        forEntityName: "Book",
-        into: context) as? Book {
-        newBook.author = bookAuthorTextField.text
-        newBook.name = bookNameTextField.text
-        newBook.coverImageUrl = imageUrl
-      }
-    }
-    
-    do {
-      try context.save()
-    }
-    catch {
-      print("Unexpected error: \(error).")
-    }
+    //TODO
   }
   
   @IBAction func pickImageButtonTapped(_ sender: Any) {

@@ -11,7 +11,6 @@
 		EE61217023E8C8C1008693FE /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61216E23E8C8C1008693FE /* ImageCache.swift */; };
 		EE61217123E8C8C1008693FE /* ImagePersitenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61216F23E8C8C1008693FE /* ImagePersitenceHelper.swift */; };
 		EE61217423E8C977008693FE /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61217323E8C977008693FE /* UIImage+Resize.swift */; };
-		EE61217823E8E44E008693FE /* QuotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61217723E8E44E008693FE /* QuotesTableViewController.swift */; };
 		EE61217A23E8EB7D008693FE /* UIVIewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61217923E8EB7D008693FE /* UIVIewController+Keyboard.swift */; };
 		EE8721CC23E7BFE9006AAC82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */; };
 		EE8721CE23E7BFE9006AAC82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8721CD23E7BFE9006AAC82 /* SceneDelegate.swift */; };
@@ -29,7 +28,6 @@
 		EE61216E23E8C8C1008693FE /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		EE61216F23E8C8C1008693FE /* ImagePersitenceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePersitenceHelper.swift; sourceTree = "<group>"; };
 		EE61217323E8C977008693FE /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
-		EE61217723E8E44E008693FE /* QuotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesTableViewController.swift; sourceTree = "<group>"; };
 		EE61217923E8EB7D008693FE /* UIVIewController+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Keyboard.swift"; sourceTree = "<group>"; };
 		EE8721C823E7BFE9006AAC82 /* BookListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8721CB23E7BFE9006AAC82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 		EE61217623E8E436008693FE /* Quotes */ = {
 			isa = PBXGroup;
 			children = (
-				EE61217723E8E44E008693FE /* QuotesTableViewController.swift */,
 			);
 			path = Quotes;
 			sourceTree = "<group>";
@@ -221,7 +218,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE61217823E8E44E008693FE /* QuotesTableViewController.swift in Sources */,
 				EE8721D623E7BFE9006AAC82 /* BookListApp.xcdatamodeld in Sources */,
 				EE8721E423E7C062006AAC82 /* BooksTableViewController.swift in Sources */,
 				EE8721E723E8C001006AAC82 /* BookViewController.swift in Sources */,

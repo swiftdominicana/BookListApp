@@ -20,50 +20,14 @@ struct BookService {
   }
 
   func getBooks(completion: @escaping (_ success: Bool) -> Void) {
-    if UserDefaults.standard.bool(forKey: DATA_DOWNLOADED_KEY) {
-      completion(true)
-      return
-    }
-
-    guard let url = URL(string: apiURL) else {
-      completion(false)
-      return
-    }
-
-    let session = URLSession.shared
-    let task = session.dataTask(with: url) { (data, _, error) in
-      guard let unWrappedData = data, error == nil else {
-        completion(false)
-        return
-      }
-      
-      saveData(unWrappedData, completion: completion)
-    }
-    
-    task.resume()
+    //TODO
   }
 }
 
 
 private extension BookService {
   func saveData(_ data: Data, completion: @escaping (_ success: Bool) -> Void) {
-    let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-    childContext.parent = self.context
-
-    guard let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
-      completion(false)
-      return
-    }
-
-    let sanitizedJson = sanitizeJSON(json)
-
-    childContext.perform {
-      let insertRequest = NSBatchInsertRequest(entity: Book.entity(), objects: sanitizedJson)
-      _ = try? childContext.execute(insertRequest)
-      try? childContext.save()
-      completion(true)
-      UserDefaults.standard.set(true, forKey: DATA_DOWNLOADED_KEY)
-    }
+    //TODO
   }
 
   func sanitizeJSON(_ json: [[String : Any]]) -> [[String : Any]] {
