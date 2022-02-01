@@ -37,23 +37,7 @@ struct BookService {
         return
       }
       
-      let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-      childContext.parent = self.context
-
-      guard let json = try? JSONSerialization.jsonObject(with: unWrappedData) as? [[String: Any]] else {
-        completion(false)
-        return
-      }
-
-      let sanitizedJson = sanitizeJSON(json)
-
-      childContext.perform {
-        let insertRequest = NSBatchInsertRequest(entity: Book.entity(), objects: sanitizedJson)
-        _ = try? childContext.execute(insertRequest)
-        try? childContext.save()
-        completion(true)
-        UserDefaults.standard.set(true, forKey: DATA_DOWNLOADED_KEY)
-      }
+      saveData(unWrappedData, completion: completion)
     }
     
     task.resume()
@@ -62,6 +46,26 @@ struct BookService {
 
 
 private extension BookService {
+  func saveData(_ data: Data, completion: @escaping (_ success: Bool) -> Void) {
+    let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+    childContext.parent = self.context
+
+    guard let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+      completion(false)
+      return
+    }
+
+    let sanitizedJson = sanitizeJSON(json)
+
+    childContext.perform {
+      let insertRequest = NSBatchInsertRequest(entity: Book.entity(), objects: sanitizedJson)
+      _ = try? childContext.execute(insertRequest)
+      try? childContext.save()
+      completion(true)
+      UserDefaults.standard.set(true, forKey: DATA_DOWNLOADED_KEY)
+    }
+  }
+
   func sanitizeJSON(_ json: [[String : Any]]) -> [[String : Any]] {
     return json.compactMap { item -> [String: Any]? in
       guard let urlString = item["coverImageUrl"] as? String,
